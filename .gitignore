@@ -1,0 +1,5 @@
+# module ignore
+node_modules
+.next
+# output dir
+dist
