@@ -1,0 +1,19 @@
+{
+  "name": "lottery_game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasonhuang82/lottery_game.git"
+  },
+  "author": "jasonhuang82",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jasonhuang82/lottery_game/issues"
+  },
+  "homepage": "https://github.com/jasonhuang82/lottery_game#readme"
+}
