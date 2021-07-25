@@ -2,4 +2,4 @@
 node_modules
 .next
 # output dir
-dist
+dist-server
