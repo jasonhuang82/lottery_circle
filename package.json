@@ -1,0 +1,45 @@
+{
+  "name": "lottery_game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development node ./src/server",
+    "build": "cross-env NODE_ENV=production next build ./src/client && npm run build:server",
+    "start": "npm run clean && npm run build && cross-env NODE_ENV=production node ./src/dist-server",
+    "clean": "rm -rf ./src/client/.next",
+    "build:server": "cross-env NODE_ENV=production babel ./src/server --out-dir ./src/dist-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasonhuang82/lottery_game.git"
+  },
+  "author": "jasonhuang82",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jasonhuang82/lottery_game/issues"
+  },
+  "homepage": "https://github.com/jasonhuang82/lottery_game#readme",
+  "dependencies": {
+    "cross-env": "7.0.3",
+    "express": "4.17.1",
+    "next": "10.2.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.8.4",
+    "@babel/core": "7.8.6",
+    "@babel/node": "7.8.4",
+    "@babel/preset-env": "7.8.6",
+    "node-sass": "4.14.1",
+    "postcss-nested": "^5.0.5",
+    "styled-jsx-plugin-postcss": "4.0.1",
+    "styled-jsx-plugin-sass": "1.0.0"
+  },
+  "postcss": {
+    "plugins": {
+      "postcss-nested": {}
+    }
+  }
+}
