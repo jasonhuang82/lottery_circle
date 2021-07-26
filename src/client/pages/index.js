@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect } from "react";
 // components
 import Layout from "components/layout";
 import HeadingTitle from "components/headingTitle";
@@ -14,8 +14,9 @@ import withRedux from "lib/redux/withRedux";
 // utils
 import getRandomInt from "utils/getRandomInt";
 function Home() {
+  // handle winner state
   const peopleLimit = 15;
-  const { loading, data, error } = useGetPeople({ limit: peopleLimit });
+  const { loading, data } = useGetPeople({ limit: peopleLimit });
   const dispatch = useDispatch();
   const winner = useSelector(state => state.winner);
   const setWinnerToStore = useCallback((person) => {
@@ -29,9 +30,27 @@ function Home() {
       console.log(`There is no any winner.`);
       return;
     }
-    setWinnerToStore(currentWinner);
+
+    const winnerInfo = {
+      id: currentWinner?.id?.value,
+      name: {
+        last: currentWinner?.name?.last,
+        first: currentWinner?.name?.first,
+      },
+      picture: {
+        large: currentWinner?.picture?.large,
+        medium: currentWinner?.picture?.medium,
+        thumbnail: currentWinner?.picture?.thumbnail,
+      },
+      nat: currentWinner?.nat,
+      email: currentWinner?.email,
+      phone: currentWinner?.phone,
+      gender: currentWinner?.gender,
+    };
+    setWinnerToStore(winnerInfo);
   }, [data]);
 
+  // generate random winner again when refetch data
   useEffect(() => {
     if (!loading && data) {
       genRandomWinner();
