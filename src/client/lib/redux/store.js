@@ -3,7 +3,7 @@ import { createStore } from 'redux';
 import reducer from './reducer';
 
 const initialState = {
-  winner: { last: "" },
+  winner: {},
 };
 export const initializeStore = (preloadedState = initialState) => {
   if (process.env.NODE_ENV !== "production") {

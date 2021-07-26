@@ -85,7 +85,14 @@ const Timer = ({
   return (
     <div className="timer">
       <span>{displayTimer}</span>
-      
+      <style jsx>{`
+        .timer {
+          margin-top: calc(20px + 5vw);
+          font-size: calc(36px + 5vw);
+          font-weight: 400;
+          color: darkslateblue;
+        }
+      `}</style>
     </div>
   );
 };

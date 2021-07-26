@@ -4,6 +4,8 @@ import noop from "lodash/noop";
 import moment from "moment";
 // local
 import Timer from 'components/timer';
+import Input from 'components/input';
+import Button from 'components/button';
 
 // when input doesn't give any value
 const DEFAULT_TIMER = 0;
@@ -61,21 +63,21 @@ const TimerControl = ({ onTimeout = noop, onTimeReset = noop}) => {
   }, [timerStarting, timerReset]);
 
   return (
-    <div>
+    <div className="timerControl">
       <div className="timerControlInputGroup">
-        <input
+        <Input
           type="text"
-          maxLength="4"
+          maxLength="2"
           min="0"
           value={duration}
           onKeyDown={handleKeyDown}
           onChange={handleChange}
         />
-        <span>分鐘</span>  
+        <span className="timerControlText">分鐘</span>  
         {
           timerStarting
-          ? <button onClick={handleResetTimer}>重設</button>
-          : <button onClick={handleSettingTimer}>設定</button>
+          ? <Button onClick={handleResetTimer}>重設</Button>
+          : <Button onClick={handleSettingTimer}>設定</Button>
         }
         
       </div>
@@ -87,9 +89,16 @@ const TimerControl = ({ onTimeout = noop, onTimeReset = noop}) => {
         reset={timerReset}
       />
       <style jsx>{`
+        .timerControl {
+          .timerControlText {
+            margin: 0 20px;
+          }
+        }
         .timerControlInputGroup {
-          input {
-
+          :global(input) {
+            display: inline-block;
+            max-width: 2.8rem;
+            text-align: center;
           }
 
           button {
