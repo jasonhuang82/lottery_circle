@@ -25,7 +25,6 @@ function Home() {
   const genRandomWinner = useCallback(() => {
     const currentWinnerIdx = getRandomInt(0, peopleLimit);
     const currentWinner = data[currentWinnerIdx];
-    console.log(`currentWinner.name`, currentWinner.name)
     if (!currentWinner) {
       console.log(`There is no any winner.`);
       return;

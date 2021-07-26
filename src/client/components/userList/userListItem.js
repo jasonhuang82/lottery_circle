@@ -46,6 +46,7 @@ const userListItem = ({ name, picture }) => {
             justify-content: center;
             align-items: center;
             padding: 10px 15px;
+            background-color: rgba(#F9F9F9, 0.7);
           }
           
           /* animation */
@@ -64,8 +65,8 @@ const userListItem = ({ name, picture }) => {
               animation-iteration-count: infinite;
               animation-name: placeHolderAnimation;
               animation-timing-function: linear;
-              background: #F6F6F6;
-              background: linear-gradient(to right, #F6F6F6 8%, #F0F0F0 18%, #F6F6F6 33%);
+              background: #F3F3F3;
+              background: linear-gradient(to right, #F3F3F3 8%, #eee 18%, #F3F3F3 33%);
               background-size: 800px 104px;
               height: 89px;
               position: relative;
