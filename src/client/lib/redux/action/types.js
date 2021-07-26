@@ -1,0 +1,1 @@
+export const SET_WINNER_INFO = "SET_WINNER_INFO";
