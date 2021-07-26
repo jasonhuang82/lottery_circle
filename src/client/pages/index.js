@@ -1,14 +1,16 @@
 import { useCallback, useEffect } from "react";
+import { CSSTransition } from 'react-transition-group';
 // components
 import Layout from "components/layout";
 import HeadingTitle from "components/headingTitle";
 import UserList from "components/userList";
 import TimerControl from "components/timerControl";
+import Dialog from "components/dialog";
+import useDialogControl from "components/dialog/useDialogControl";
 // hook
 import useGetPeople from "hooks/useGetPeople";
 // redux
 import { useDispatch, useSelector } from "react-redux";
-// import { bindActionCreators } from "redux";
 import { setWinnerInfo } from "lib/redux/action";
 import withRedux from "lib/redux/withRedux";
 // utils
@@ -57,9 +59,16 @@ function Home() {
     }
   }, [loading, data, genRandomWinner]);
 
+
+  // dialog
+  const [isOpen, openDialog, closeDialog] = useDialogControl();
+
+  // timeout
   const handleTimeout = useCallback(() => {
-    alert(`lastName:${winner?.name.last} ${winner?.name.first}`);
-  }, [winner]);
+    // alert(`lastName:${winner?.name.last} ${winner?.name.first}`);
+    openDialog();
+  }, [winner, openDialog]);
+  
 
   
   return (
@@ -82,6 +91,25 @@ function Home() {
               <UserList data={data}/>
             </section>
           </div>
+
+          <CSSTransition in={isOpen} timeout={400} classNames="dialog-transition" unmountOnExit>
+            <Dialog
+              id="homeDialog"
+              onCancel={closeDialog}
+              onClose={closeDialog}
+            >
+              <div className="homeDialogContent">
+                <div className="homeDialogTitle">抽獎結果</div>
+                <div className="homeDialogCard">
+                  {/* <img src={winner?.picture?.large} /> */}
+                  <div className="homeDialogCardPicture"></div>
+                  <div className="homeDialogCardTitle">
+                    得獎人：{winner?.name?.last} {winner?.name?.first}
+                  </div>
+                </div>
+              </div>
+            </Dialog>
+          </CSSTransition>
         </div>
         <style jsx>{`
           .home {
@@ -101,6 +129,65 @@ function Home() {
             }
             .homeLotteryPeople {
               flex: 4;
+            }
+          }
+
+          /* homeDialog */
+          :global(.dialog-transition-enter) {
+            opacity: 0;
+          }
+          :global(.dialog-transition-enter-active) {
+            opacity: 1;
+            transition: opacity 400ms;
+          }
+          :global(.dialog-transition-exit) {
+            opacity: 1;
+          }
+          :global(.dialog-transition-exit-active) {
+            opacity: 0;
+            transition: opacity 400ms;
+          }
+
+          :global(#homeDialog) {
+            :global(.dialogContent) {
+              max-width: 320px;
+            }
+          }
+          
+          .homeDialogContent {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .homeDialogTitle {
+              font-size: 32px;
+              margin-bottom: 15px;
+            }
+
+            .homeDialogCardPicture {
+              display: inline-block;
+              width: 100%;
+              padding: 45%;
+              max-width: 230px;
+              background-repeat: no-repeat;
+              background-position: center;
+              background-size: cover;
+              background-color: #eee;
+              background-image: url(${winner?.picture?.large});
+            }
+
+            .homeDialogCard {
+              width: 100%;
+              text-align: center;
+              img {
+                display: inline-block;
+                width: 100%;
+                max-width: 230px;
+              }
+            }
+
+            .homeDialogCardTitle {
+              font-size: 16px;
+              margin-top: 15px;
             }
           }
         `}</style>
