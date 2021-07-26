@@ -12,6 +12,9 @@ const config = {
       alias: {
         ...config.resolve.alias,
         "components": path.resolve(__dirname, 'src/client/components'),
+        "hooks": path.resolve(__dirname, 'src/client/hooks'),
+        "lib": path.resolve(__dirname, 'src/client/lib'),
+        "utils": path.resolve(__dirname, 'src/client/utils'),
       },
     };
 

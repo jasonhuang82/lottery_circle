@@ -1,10 +1,16 @@
-import { memo } from 'react'
+import { memo } from 'react';
+import Head from 'next/head';
 
 const Layout = ({
+  title,
   children,
 }) => {
   return (
     <>
+      <Head>
+        {/* can be enhance common meta data for reuse page */}
+        <title>{ title }</title>
+      </Head>
       { children }
       <style jsx global>{`
         @font-face {
@@ -33,6 +39,7 @@ const Layout = ({
         .container {
           max-width: 768px;
           margin: 0 auto;
+          padding: 0 30px;
           @media (min-width: 1024px) {
             max-width: 1024px;
           } 
