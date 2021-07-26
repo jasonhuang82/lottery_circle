@@ -35,7 +35,6 @@ const Timer = ({
         seconds < 0
       );
       if (isTimeout) {
-        console.log("stop timeout");
         if (timerId.current) {
           clearTimeout(timerId.current);
         }
