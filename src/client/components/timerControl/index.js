@@ -67,7 +67,7 @@ const TimerControl = ({ onTimeout = noop, onTimeReset = noop}) => {
       <div className="timerControlInputGroup">
         <Input
           type="text"
-          maxLength="3"
+          maxLength="2"
           min="0"
           value={duration}
           onKeyDown={handleKeyDown}
@@ -95,8 +95,10 @@ const TimerControl = ({ onTimeout = noop, onTimeReset = noop}) => {
           }
         }
         .timerControlInputGroup {
-          input {
-
+          :global(input) {
+            display: inline-block;
+            max-width: 2.8rem;
+            text-align: center;
           }
 
           button {
