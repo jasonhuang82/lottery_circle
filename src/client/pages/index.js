@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { CSSTransition } from 'react-transition-group';
+import get from "lodash/get";
 // components
 import Layout from "components/layout";
 import HeadingTitle from "components/headingTitle";
@@ -34,20 +35,20 @@ function Home() {
     }
 
     const winnerInfo = {
-      id: currentWinner?.id?.value,
+      id: get(currentWinner, "id.value", ""),
       name: {
-        last: currentWinner?.name?.last,
-        first: currentWinner?.name?.first,
+        last: get(currentWinner, "name.last", ""),
+        first: get(currentWinner, "name.first", ""),
       },
       picture: {
-        large: currentWinner?.picture?.large,
-        medium: currentWinner?.picture?.medium,
-        thumbnail: currentWinner?.picture?.thumbnail,
+        large: get(currentWinner, "picture.large", ""),
+        medium: get(currentWinner, "picture.medium", ""),
+        thumbnail: get(currentWinner, "picture.thumbnail", ""),
       },
-      nat: currentWinner?.nat,
-      email: currentWinner?.email,
-      phone: currentWinner?.phone,
-      gender: currentWinner?.gender,
+      nat: get(currentWinner, "nat", ""),
+      email: get(currentWinner, "email", ""),
+      phone: get(currentWinner, "phone", ""),
+      gender: get(currentWinner, "gender", ""),
     };
     setWinnerToStore(winnerInfo);
   }, [data]);
@@ -65,7 +66,6 @@ function Home() {
 
   // timeout
   const handleTimeout = useCallback(() => {
-    // alert(`lastName:${winner?.name.last} ${winner?.name.first}`);
     openDialog();
   }, [winner, openDialog]);
   
@@ -101,10 +101,9 @@ function Home() {
               <div className="homeDialogContent">
                 <div className="homeDialogTitle">抽獎結果</div>
                 <div className="homeDialogCard">
-                  {/* <img src={winner?.picture?.large} /> */}
                   <div className="homeDialogCardPicture"></div>
                   <div className="homeDialogCardTitle">
-                    得獎人：{winner?.name?.last} {winner?.name?.first}
+                    得獎人：{ get(winner, "name.last", "") } { get(winner, "name.first", "") }
                   </div>
                 </div>
               </div>
@@ -172,7 +171,7 @@ function Home() {
               background-position: center;
               background-size: cover;
               background-color: #eee;
-              background-image: url(${winner?.picture?.large});
+              ${get(winner, "picture.large") && `background-image: url(${get(winner, "picture.large")});`}
             }
 
             .homeDialogCard {

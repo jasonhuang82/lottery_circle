@@ -1,6 +1,7 @@
 // node module
 import { useState, useCallback, useMemo } from "react";
 import noop from "lodash/noop";
+import get from "lodash/get";
 import moment from "moment";
 // local
 import Timer from 'components/timer';
@@ -21,7 +22,7 @@ const TimerControl = ({ onTimeout = noop, onTimeReset = noop}) => {
   const handleChange = useCallback(e => {
     const regex = /^[0-9]*$/;
     const value = e.target.value;
-    const durationType = e.target.dataset?.durationType;
+    const durationType = get(e, "target.dataset.durationType");
     if(!regex.test(value)) {
       console.warn(`[TimerControl]: input must be number`)
       return;
