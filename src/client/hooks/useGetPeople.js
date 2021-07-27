@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-
+import get from "lodash/get";
 const useGetPeople = ({ didMountQuery = true, limit = 10, offset = 0 } = {}) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -12,7 +12,8 @@ const useGetPeople = ({ didMountQuery = true, limit = 10, offset = 0 } = {}) => 
       const res = await fetch(`https://randomuser.me/api?results=${limit}&page=${offset}`)
         .then((res) => res.json())
         .then(res => res);
-      const result = res?.results;
+      const result = get(res, "results");
+      
       if (!result) {
         throw "there is no result from api.";
       }

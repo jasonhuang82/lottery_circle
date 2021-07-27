@@ -1,8 +1,12 @@
+import get from "lodash/get";
 const userListItem = ({ name, picture }) => {
+  const largePicture = get(picture, "large");
+  const lastName = get(name, "last");
+  const firstName = get(name, "first");
   return (
     <li className="userItem">
       {
-        picture?.large
+        largePicture
         ? <div className="userItemPicture"></div>
         : <div className="imagePlaceholder"></div>
       }
@@ -10,8 +14,8 @@ const userListItem = ({ name, picture }) => {
       <div className="userItemUser">
         
         { 
-          ( name?.last && name?.first )
-          ? <span className="userItemName">{ name?.last } { name?.first }</span>
+          ( lastName && firstName )
+          ? <span className="userItemName">{ lastName } { firstName }</span>
           : <span className="textPlaceholder"></span>
         }
       </div>
@@ -37,7 +41,7 @@ const userListItem = ({ name, picture }) => {
 
           .userItemPicture {
             @extend %pictureStyle;
-            ${!!picture?.large && `background-image: url(${picture?.large});`}
+            ${!!largePicture && `background-image: url(${largePicture});`}
           }
 
           .userItemUser {
