@@ -15,6 +15,7 @@ const config = {
         "hooks": path.resolve(__dirname, 'src/client/hooks'),
         "lib": path.resolve(__dirname, 'src/client/lib'),
         "utils": path.resolve(__dirname, 'src/client/utils'),
+        "constants": path.resolve(__dirname, 'src/client/constants'),
       },
     };
 
