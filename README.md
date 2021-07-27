@@ -14,3 +14,4 @@ npm run dev
 // production
 npm start
 ```
+[Demo](https://lottery-game.vercel.app/)
