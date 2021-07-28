@@ -38,14 +38,14 @@ const WinnerDialog = ({
           }
           :global(.dialog-transition-enter-active) {
             opacity: 1;
-            transition: opacity 400ms;
+            transition: opacity ${timeout}ms;
           }
           :global(.dialog-transition-exit) {
             opacity: 1;
           }
           :global(.dialog-transition-exit-active) {
             opacity: 0;
-            transition: opacity 400ms;
+            transition: opacity ${timeout}ms;
           }
 
           :global(#winnerDialog) {
