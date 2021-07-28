@@ -1,12 +1,11 @@
 import { useCallback, useEffect } from "react";
-import { CSSTransition } from 'react-transition-group';
 import get from "lodash/get";
 // components
 import Layout from "components/layout";
 import HeadingTitle from "components/headingTitle";
 import UserList from "components/userList";
 import TimerControl from "components/timerControl";
-import Dialog from "components/dialog";
+import WinnerDialog from "components/dialog/winnerDialog";
 import useDialogControl from "components/dialog/useDialogControl";
 // hook
 import useGetPeople from "hooks/useGetPeople";
@@ -22,10 +21,7 @@ function Home() {
   const { loading, data } = useGetPeople({ limit: peopleLimit });
   const dispatch = useDispatch();
   const winner = useSelector(state => state.winner);
-  const setWinnerToStore = useCallback((person) => {
-    dispatch(setWinnerInfo(person));
-  }, []);
-
+  const setWinnerToStore = useCallback((person) => dispatch(setWinnerInfo(person)), []);
   const genRandomWinner = useCallback(() => {
     const currentWinnerIdx = getRandomInt(0, peopleLimit);
     const currentWinner = data[currentWinnerIdx];
@@ -52,29 +48,19 @@ function Home() {
     };
     setWinnerToStore(winnerInfo);
   }, [data]);
-
   // generate random winner again when refetch data
   useEffect(() => {
     if (!loading && data) {
       genRandomWinner();
     }
   }, [loading, data, genRandomWinner]);
-
-
   // dialog
   const [isOpen, openDialog, closeDialog] = useDialogControl();
-
   // timeout
-  const handleTimeout = useCallback(() => {
-    openDialog();
-  }, [winner, openDialog]);
-  
-
+  const handleTimeout = useCallback(openDialog, [openDialog]);
   
   return (
-    <Layout
-      title="Lottery Game"
-    >
+    <Layout title="Lottery Game">
       <div className="home">
         <div className="container">
           <div className="homeContent">
@@ -85,30 +71,20 @@ function Home() {
                 onTimeout={handleTimeout}
               />
             </section>
-
             <section className="homeLotteryPeople">
               <HeadingTitle title="參與抽獎名單" type="h3"/>
               <UserList data={data}/>
             </section>
           </div>
-
-          <CSSTransition in={isOpen} timeout={400} classNames="dialog-transition" unmountOnExit>
-            <Dialog
-              id="homeDialog"
-              onCancel={closeDialog}
-              onClose={closeDialog}
-            >
-              <div className="homeDialogContent">
-                <div className="homeDialogTitle">抽獎結果</div>
-                <div className="homeDialogCard">
-                  <div className="homeDialogCardPicture"></div>
-                  <div className="homeDialogCardTitle">
-                    得獎人：{ get(winner, "name.last", "") } { get(winner, "name.first", "") }
-                  </div>
-                </div>
-              </div>
-            </Dialog>
-          </CSSTransition>
+          <WinnerDialog
+            isOpen={isOpen}
+            timeout={400}
+            classNames="dialog-transition"
+            name={`${get(winner, "name.last", "")} ${get(winner, "name.first", "")}`}
+            picture={get(winner, "picture.large") || ""}
+            onCancel={closeDialog}
+            onClose={closeDialog}
+          />
         </div>
         <style jsx>{`
           .home {
@@ -128,65 +104,6 @@ function Home() {
             }
             .homeLotteryPeople {
               flex: 4;
-            }
-          }
-
-          /* homeDialog */
-          :global(.dialog-transition-enter) {
-            opacity: 0;
-          }
-          :global(.dialog-transition-enter-active) {
-            opacity: 1;
-            transition: opacity 400ms;
-          }
-          :global(.dialog-transition-exit) {
-            opacity: 1;
-          }
-          :global(.dialog-transition-exit-active) {
-            opacity: 0;
-            transition: opacity 400ms;
-          }
-
-          :global(#homeDialog) {
-            :global(.dialogContent) {
-              max-width: 320px;
-            }
-          }
-          
-          .homeDialogContent {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            .homeDialogTitle {
-              font-size: 32px;
-              margin-bottom: 15px;
-            }
-
-            .homeDialogCardPicture {
-              display: inline-block;
-              width: 100%;
-              padding: 45%;
-              max-width: 230px;
-              background-repeat: no-repeat;
-              background-position: center;
-              background-size: cover;
-              background-color: #eee;
-              ${get(winner, "picture.large") && `background-image: url(${get(winner, "picture.large")});`}
-            }
-
-            .homeDialogCard {
-              width: 100%;
-              text-align: center;
-              img {
-                display: inline-block;
-                width: 100%;
-                max-width: 230px;
-              }
-            }
-
-            .homeDialogCardTitle {
-              font-size: 16px;
-              margin-top: 15px;
             }
           }
         `}</style>
