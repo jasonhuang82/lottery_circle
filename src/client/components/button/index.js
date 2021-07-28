@@ -12,6 +12,9 @@ const Button = ({ children, ...nextProps}) => {
           padding: 8px 15px;
           border-radius: 5px;
           cursor: pointer;
+          &:disabled {
+            cursor: not-allowed;
+          }
         }
       `}</style>
     </button>
