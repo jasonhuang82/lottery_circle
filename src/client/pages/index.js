@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import get from "lodash/get";
 // components
 import Layout from "components/layout";
@@ -24,7 +24,7 @@ function Home() {
   const setWinnerToStore = useCallback((person) => dispatch(setWinnerInfo(person)), []);
   const genRandomWinner = useCallback(() => {
     const currentWinnerIdx = getRandomInt(0, peopleLimit);
-    const currentWinner = data[currentWinnerIdx];
+    const currentWinner = get(data, currentWinnerIdx);
     if (!currentWinner) {
       console.log(`There is no any winner.`);
       return;
@@ -56,8 +56,33 @@ function Home() {
   }, [loading, data, genRandomWinner]);
   // dialog
   const [isOpen, openDialog, closeDialog] = useDialogControl();
+  // winner data
+  const winnerName = useMemo(() => {
+    const lastName = get(winner, "name.last", "") || "";
+    const firstName = get(winner, "name.first", "") || "";
+    if (!lastName) {
+      return "";
+    }
+    return `${lastName} ${firstName}`;
+  }, [winner]);
+  const winnerPicture = useMemo(() => {
+    const picture = get(winner, "picture.large") || "";
+    if (!picture) {
+      return "";
+    }
+    return picture;
+  }, [winner]);
+
+  const isAllowToPlay = useMemo(() => winnerPicture && winnerName, [winnerPicture, winnerName]);
   // timeout
-  const handleTimeout = useCallback(openDialog, [openDialog]);
+  const handleTimeout = useCallback(() => {
+    if (!isAllowToPlay) {
+      console.error(`There is no winner data.`);
+      return;
+    }
+
+    openDialog();
+  }, [openDialog, isAllowToPlay]);
   
   return (
     <Layout title="Lottery Game">
@@ -67,6 +92,7 @@ function Home() {
             <section className="homeLotteryTime">
               <HeadingTitle title="抽獎時間" type="h3"/>
               <TimerControl
+                disabled={!isAllowToPlay}
                 onTimeReset={genRandomWinner}
                 onTimeout={handleTimeout}
               />
@@ -80,8 +106,8 @@ function Home() {
             isOpen={isOpen}
             timeout={400}
             classNames="dialog-transition"
-            name={`${get(winner, "name.last", "")} ${get(winner, "name.first", "")}`}
-            picture={get(winner, "picture.large") || ""}
+            name={winnerName}
+            picture={winnerPicture}
             onCancel={closeDialog}
             onClose={closeDialog}
           />
