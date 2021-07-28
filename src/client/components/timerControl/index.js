@@ -99,6 +99,7 @@ const TimerControl = ({ onTimeout = noop, onTimeReset = noop, disabled = false }
           value={hourDuration}
           onChange={handleChange}
           data-duration-type={HOUR}
+          disabled={timerStarting}
         />
         <span className="timerControlText">:</span>  
         <Input
@@ -108,6 +109,7 @@ const TimerControl = ({ onTimeout = noop, onTimeReset = noop, disabled = false }
           value={minuteDuration}
           onChange={handleChange}
           data-duration-type={MINUTE}
+          disabled={timerStarting}
         />
         <span className="timerControlText">:</span>  
         <Input
@@ -117,6 +119,7 @@ const TimerControl = ({ onTimeout = noop, onTimeReset = noop, disabled = false }
           value={secondDuration}
           onChange={handleChange}
           data-duration-type={SECOND}
+          disabled={timerStarting}
         />
         
         {
