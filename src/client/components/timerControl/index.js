@@ -10,7 +10,7 @@ import Button from 'components/button';
 // constants
 import { HOUR, MINUTE, SECOND } from 'constants/durationType';
 
-const TimerControl = ({ onTimeout = noop, onTimeReset = noop}) => {
+const TimerControl = ({ onTimeout = noop, onTimeReset = noop, disabled = false }) => {
   const [timerStarting, setTimerStarting] = useState(false);
   const [timerReset, setTimerReset] = useState(0);
   // const [duration, setDuration] = useState(0);
@@ -87,20 +87,6 @@ const TimerControl = ({ onTimeout = noop, onTimeReset = noop}) => {
         .add(hourDuration, "hours")
         .toISOString()
       return duration;
-    // if (timerStarting || timerReset > FIRST_RESET_COUNT) {
-    //   const duration = moment
-    //     .duration(secondDuration, "seconds")
-    //     .add(minuteDuration, "minutes")
-    //     .add(hourDuration, "hours")
-    //     .toISOString()
-    //   return duration;
-    // }
-
-    // if (timerReset <= FIRST_RESET_COUNT) {
-    //   return DEFAULT_TIMER;
-    // }
-
-    // return DEFAULT_TIMER;
   }, [timerStarting, timerReset, hourDuration, minuteDuration, secondDuration]);
 
   return (
@@ -134,9 +120,9 @@ const TimerControl = ({ onTimeout = noop, onTimeReset = noop}) => {
         />
         
         {
-          timerStarting
+          timerStarting && !disabled
           ? <Button onClick={handleResetTimer}>重設</Button>
-          : <Button onClick={handleSettingTimer}>抽獎</Button>
+          : <Button onClick={handleSettingTimer} disabled={disabled}>抽獎</Button>
         }
         
       </div>
