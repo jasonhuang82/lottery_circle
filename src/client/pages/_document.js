@@ -11,8 +11,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <link rel="stylesheet" href="/css/normalize.min.css" />
-          <meta name="google-site-verification" content="yy_0ywbO1m4lHpWhqzWXSWLEWnqt9aJSK2KxzEyMkXo" />
-        </Head>
+          <meta name="google-site-verification" content="F5LwDVY-rNioYYyyg5HXApOayWCGUoPd0DJhg2NYemY" />        </Head>
         <body>
           <Main />
           <NextScript />
