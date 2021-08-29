@@ -9,8 +9,10 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head />
-        <link rel="stylesheet" href="/css/normalize.min.css" />
+        <Head>
+          <link rel="stylesheet" href="/css/normalize.min.css" />
+          <meta name="google-site-verification" content="yy_0ywbO1m4lHpWhqzWXSWLEWnqt9aJSK2KxzEyMkXo" />
+        </Head>
         <body>
           <Main />
           <NextScript />
