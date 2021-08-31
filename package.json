@@ -8,7 +8,8 @@
     "build": "cross-env NODE_ENV=production next build ./src/client && npm run build:server",
     "start": "npm run clean && npm run build && cross-env NODE_ENV=production node ./src/dist-server",
     "clean": "rm -rf ./src/client/.next",
-    "build:server": "cross-env NODE_ENV=production babel ./src/server --out-dir ./src/dist-server"
+    "build:server": "cross-env NODE_ENV=production babel ./src/server --out-dir ./src/dist-server",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "classnames": "2.3.1",
     "cross-env": "7.0.3",
     "express": "4.17.1",
+    "jest-cli": "^27.1.0",
     "lodash": "4.17.21",
     "moment": "2.29.1",
     "next": "10.2.2",
